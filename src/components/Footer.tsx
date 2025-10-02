@@ -21,7 +21,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://www.instagram.com/wall.of.fame.iitj"
                 className="p-2 bg-neutral-800 rounded-full hover:bg-amber-600 transition-colors"
                 aria-label="Instagram"
               >
@@ -74,10 +74,10 @@ export default function Footer() {
               <li className="flex items-start space-x-2">
                 <Mail size={18} className="mt-1 flex-shrink-0" />
                 <a
-                  href="mailto:hello@walloffame.com"
+                  href="mailto:walloffameiitj@gmail.com"
                   className="hover:text-amber-400 transition-colors"
                 >
-                  hello@walloffame.com
+                  walloffameiitj@gmail.com
                 </a>
               </li>
               <li className="text-neutral-400 text-sm mt-4">
