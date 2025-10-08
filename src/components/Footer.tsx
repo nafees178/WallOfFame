@@ -71,15 +71,6 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Contact Us</h4>
             <ul className="space-y-3">
-              <li className="flex items-start space-x-2">
-                <Mail size={18} className="mt-1 flex-shrink-0" />
-                <a
-                  href="mailto:walloffameiitj@gmail.com"
-                  className="hover:text-amber-400 transition-colors"
-                >
-                  walloffameiitj@gmail.com
-                </a>
-              </li>
               <li className="text-neutral-400 text-sm mt-4">
                 IIT Jodhpur, Karwar
                 <br />

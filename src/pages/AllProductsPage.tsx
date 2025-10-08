@@ -3,12 +3,11 @@ import { X, ZoomIn, ArrowLeft } from 'lucide-react';
 import { generatePosters, type Poster } from '../utils/generatePosters';
 import { useNavigate } from 'react-router-dom';
 
-const allPosters = generatePosters(100);
+const allPosters = generatePosters();
 
 export default function AllProductsPage() {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState<Poster | null>(null);
-  const [showMockup, setShowMockup] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState<string>('All');
 
   const themes = ['All', ...Array.from(new Set(allPosters.map(p => p.theme)))];
@@ -60,15 +59,24 @@ export default function AllProductsPage() {
               className="group bg-white dark:bg-neutral-800 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer border border-neutral-200 dark:border-neutral-700"
               onClick={() => {
                 setSelectedProduct(product);
-                setShowMockup(false);
               }}
             >
-              <div className="relative aspect-[3/4] overflow-hidden bg-neutral-200 dark:bg-neutral-700">
-                <img
-                  src={product.thumbnail}
-                  alt={product.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+              <div className={`relative overflow-hidden bg-neutral-200 dark:bg-neutral-700 ${
+                product.theme === 'Split' ? 'aspect-[16/9]' : 'aspect-[3/4]'
+              }`}>
+                {product.thumbnail ? (
+                  <img
+                    src={product.thumbnail}
+                    alt={product.title}
+                    className={`w-full h-full group-hover:scale-105 transition-transform duration-500 ${
+                      product.theme === 'Split' ? 'rotate-[270deg] object-contain' : 'object-cover'
+                    }`}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-neutral-300 dark:bg-neutral-600">
+                    <span className="text-neutral-500 dark:text-neutral-400 text-sm">No Image</span>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white dark:bg-neutral-900 rounded-full p-3">
                     <ZoomIn className="text-neutral-900 dark:text-white" size={20} />
@@ -102,20 +110,23 @@ export default function AllProductsPage() {
           <div className="bg-white dark:bg-neutral-800 rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
             <div className="grid md:grid-cols-2 gap-8 p-8">
               <div className="space-y-4">
-                <div className="aspect-[3/4] rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-700">
-                  <img
-                    src={showMockup ? selectedProduct.wallMockup : selectedProduct.fullImage}
-                    alt={selectedProduct.title}
-                    className="w-full h-full object-cover"
-                  />
+                <div className={`rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-700 ${
+                  selectedProduct.theme === 'Split' ? 'aspect-[16/9]' : 'aspect-[3/4]'
+                }`}>
+                  {selectedProduct.fullImage ? (
+                    <img
+                      src={selectedProduct.fullImage}
+                      alt={selectedProduct.title}
+                      className={`w-full h-full ${
+                        selectedProduct.theme === 'Split' ? 'rotate-[270deg] object-contain' : 'object-cover'
+                      }`}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-neutral-200 dark:bg-neutral-600">
+                      <span className="text-neutral-500 dark:text-neutral-400 text-sm">No Image Available</span>
+                    </div>
+                  )}
                 </div>
-
-                <button
-                  onClick={() => setShowMockup(!showMockup)}
-                  className="w-full py-3 bg-neutral-900 dark:bg-amber-600 text-white rounded-lg hover:bg-neutral-800 dark:hover:bg-amber-700 transition-colors font-medium"
-                >
-                  {showMockup ? 'View Poster' : 'View on Wall'}
-                </button>
               </div>
 
               <div className="flex flex-col justify-center">
@@ -129,24 +140,6 @@ export default function AllProductsPage() {
                 </div>
 
                 <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
-                      Description
-                    </h3>
-                    <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                      {selectedProduct.description}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">
-                      Inspiration
-                    </h3>
-                    <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                      {selectedProduct.inspiration}
-                    </p>
-                  </div>
-
                   <div className="pt-4 border-t border-neutral-200 dark:border-neutral-700">
                     <h3 className="text-sm font-semibold text-neutral-900 dark:text-white mb-2">
                       Features
@@ -154,7 +147,6 @@ export default function AllProductsPage() {
                     <ul className="text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
                       <li>• Premium quality print</li>
                       <li>• Museum-grade paper</li>
-                      <li>• Available in multiple sizes</li>
                       <li>• Ready to frame</li>
                     </ul>
                   </div>

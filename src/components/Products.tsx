@@ -1,85 +1,24 @@
 import { useState } from 'react';
 import { X, ZoomIn, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { generatePosters } from '../utils/generatePosters';
 
 interface Product {
   id: number;
   title: string;
   thumbnail: string;
   fullImage: string;
-  wallMockup: string;
   description: string;
   theme: string;
   inspiration: string;
 }
 
-const products: Product[] = [
-  {
-    id: 1,
-    title: 'Urban Dreams',
-    thumbnail: 'https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=600',
-    fullImage: 'https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    wallMockup: 'https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    description: 'A stunning cityscape that captures the energy and ambition of modern urban life.',
-    theme: 'Urban & Architecture',
-    inspiration: 'Inspired by the golden hour views of metropolitan skylines.'
-  },
-  {
-    id: 2,
-    title: 'Serenity',
-    thumbnail: 'https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&w=600',
-    fullImage: 'https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    wallMockup: 'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    description: 'Find peace in nature with this calming landscape that brings tranquility to any space.',
-    theme: 'Nature & Landscapes',
-    inspiration: 'The quiet beauty of mountain lakes at dawn.'
-  },
-  {
-    id: 3,
-    title: 'Bold Expression',
-    thumbnail: 'https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=600',
-    fullImage: 'https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    wallMockup: 'https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    description: 'A vibrant abstract piece that adds personality and creative energy to your walls.',
-    theme: 'Abstract & Modern',
-    inspiration: 'The intersection of color theory and emotional expression.'
-  },
-  {
-    id: 4,
-    title: 'Timeless Elegance',
-    thumbnail: 'https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&w=600',
-    fullImage: 'https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    wallMockup: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    description: 'Classic black and white photography that never goes out of style.',
-    theme: 'Minimalist & Classic',
-    inspiration: 'The enduring beauty of simplicity and contrast.'
-  },
-  {
-    id: 5,
-    title: 'Tropical Escape',
-    thumbnail: 'https://images.pexels.com/photos/1007657/pexels-photo-1007657.jpeg?auto=compress&cs=tinysrgb&w=600',
-    fullImage: 'https://images.pexels.com/photos/1007657/pexels-photo-1007657.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    wallMockup: 'https://images.pexels.com/photos/1454806/pexels-photo-1454806.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    description: 'Bring vacation vibes home with lush tropical paradise imagery.',
-    theme: 'Travel & Adventure',
-    inspiration: 'The allure of exotic destinations and natural beauty.'
-  },
-  {
-    id: 6,
-    title: 'Cosmic Wonder',
-    thumbnail: 'https://images.pexels.com/photos/1146134/pexels-photo-1146134.jpeg?auto=compress&cs=tinysrgb&w=600',
-    fullImage: 'https://images.pexels.com/photos/1146134/pexels-photo-1146134.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    wallMockup: 'https://images.pexels.com/photos/1579253/pexels-photo-1579253.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    description: 'Explore the universe from your living room with breathtaking space photography.',
-    theme: 'Space & Science',
-    inspiration: 'The infinite mysteries of the cosmos.'
-  }
-];
+const allPosters = generatePosters();
+const products = allPosters.slice(0, 6); // Show first 6 posters
 
 export default function Products() {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [showMockup, setShowMockup] = useState(false);
 
   return (
     <div className="py-24 bg-neutral-50 dark:bg-neutral-800">
@@ -100,15 +39,24 @@ export default function Products() {
               className="group bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer border border-neutral-200 dark:border-neutral-700"
               onClick={() => {
                 setSelectedProduct(product);
-                setShowMockup(false);
               }}
             >
-              <div className="relative aspect-[3/4] overflow-hidden bg-neutral-200">
-                <img
-                  src={product.thumbnail}
-                  alt={product.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+              <div className={`relative overflow-hidden bg-neutral-200 ${
+                product.theme === 'Split' ? 'aspect-[16/9]' : 'aspect-[3/4]'
+              }`}>
+                {product.thumbnail ? (
+                  <img
+                    src={product.thumbnail}
+                    alt={product.title}
+                    className={`w-full h-full group-hover:scale-105 transition-transform duration-500 ${
+                      product.theme === 'Split' ? 'rotate-[270deg] object-contain' : 'object-cover'
+                    }`}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-neutral-300 dark:bg-neutral-600">
+                    <span className="text-neutral-500 dark:text-neutral-400 text-sm">No Image</span>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-full p-3">
                     <ZoomIn className="text-neutral-900" size={24} />
@@ -152,20 +100,23 @@ export default function Products() {
           <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
             <div className="grid md:grid-cols-2 gap-8 p-8">
               <div className="space-y-4">
-                <div className="aspect-[3/4] rounded-xl overflow-hidden bg-neutral-100">
-                  <img
-                    src={showMockup ? selectedProduct.wallMockup : selectedProduct.fullImage}
-                    alt={selectedProduct.title}
-                    className="w-full h-full object-cover"
-                  />
+                <div className={`rounded-xl overflow-hidden bg-neutral-100 ${
+                  selectedProduct.theme === 'Split' ? 'aspect-[16/9]' : 'aspect-[3/4]'
+                }`}>
+                  {selectedProduct.fullImage ? (
+                    <img
+                      src={selectedProduct.fullImage}
+                      alt={selectedProduct.title}
+                      className={`w-full h-full ${
+                        selectedProduct.theme === 'Split' ? 'rotate-[270deg] object-contain' : 'object-cover'
+                      }`}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-neutral-200">
+                      <span className="text-neutral-500 text-sm">No Image Available</span>
+                    </div>
+                  )}
                 </div>
-
-                <button
-                  onClick={() => setShowMockup(!showMockup)}
-                  className="w-full py-3 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 transition-colors font-medium"
-                >
-                  {showMockup ? 'View Poster' : 'View on Wall'}
-                </button>
               </div>
 
               <div className="flex flex-col justify-center">
@@ -179,24 +130,6 @@ export default function Products() {
                 </div>
 
                 <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-neutral-900 mb-2">
-                      Description
-                    </h3>
-                    <p className="text-neutral-600 leading-relaxed">
-                      {selectedProduct.description}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold text-neutral-900 mb-2">
-                      Inspiration
-                    </h3>
-                    <p className="text-neutral-600 leading-relaxed">
-                      {selectedProduct.inspiration}
-                    </p>
-                  </div>
-
                   <div className="pt-4 border-t border-neutral-200">
                     <h3 className="text-sm font-semibold text-neutral-900 mb-2">
                       Features
@@ -204,7 +137,6 @@ export default function Products() {
                     <ul className="text-sm text-neutral-600 space-y-1">
                       <li>• Premium quality print</li>
                       <li>• Museum-grade paper</li>
-                      <li>• Available in multiple sizes</li>
                       <li>• Ready to frame</li>
                     </ul>
                   </div>

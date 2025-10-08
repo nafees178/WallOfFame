@@ -1,54 +1,22 @@
-import { Linkedin, Mail } from 'lucide-react';
-
 interface TeamMember {
   name: string;
-  role: string;
-  bio: string;
-  imageUrl: string;
-  linkedin?: string;
-  email?: string;
 }
 
 const teamMembers: TeamMember[] = [
   {
-    name: 'Person 1',
-    role: 'Founder & Creative Director',
-    bio: 'Passionate about design and storytelling through visual art. 10+ years in graphic design and branding.',
-    imageUrl: 'https://images.pexels.com/photos/2072183/pexels-photo-2072183.jpeg?auto=compress&cs=tinysrgb&w=600',
-    linkedin: '#',
-    email: 'person1@walloffame.com'
+    name: 'Shreyansh Soni'
   },
   {
-    name: 'Person 2',
-    role: 'Lead Designer',
-    bio: 'Creating bold, inspiring designs that transform spaces. Specializes in contemporary and minimalist aesthetics.',
-    imageUrl: 'https://images.pexels.com/photos/1738986/pexels-photo-1738986.jpeg?auto=compress&cs=tinysrgb&w=600',
-    linkedin: '#',
-    email: 'person2@walloffame.com'
+    name: 'Nafees Ansari'
   },
   {
-    name: 'Person 3',
-    role: 'Product Manager',
-    bio: 'Bringing creative visions to life with quality and precision. Ensures every poster meets our high standards.',
-    imageUrl: 'https://images.pexels.com/photos/1323206/pexels-photo-1323206.jpeg?auto=compress&cs=tinysrgb&w=600',
-    linkedin: '#',
-    email: 'person3@walloffame.com'
+    name: 'Mohit Kolhe'
   },
   {
-    name: 'Person 4',
-    role: 'Marketing Lead',
-    bio: 'Building connections between art and audience. Passionate about sharing stories that matter.',
-    imageUrl: 'https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=600',
-    linkedin: '#',
-    email: 'person4@walloffame.com'
+    name: 'Ritesh Ware'
   },
   {
-    name: 'Person 5',
-    role: 'Operations Manager',
-    bio: 'Ensuring smooth operations and delivering excellence in every aspect of our business.',
-    imageUrl: 'https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=600',
-    linkedin: '#',
-    email: 'person5@walloffame.com'
+    name: 'Dhawal Kothari'
   }
 ];
 
@@ -65,51 +33,26 @@ export default function Team() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {teamMembers.map((member, index) => (
             <div
               key={index}
-              className="group bg-neutral-50 dark:bg-neutral-800 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-neutral-200 dark:border-neutral-700"
+              className="group relative bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800 dark:to-neutral-900 rounded-3xl p-8 hover:shadow-2xl hover:scale-105 transition-all duration-500 border border-neutral-200 dark:border-neutral-700 hover:border-amber-500 dark:hover:border-amber-400"
             >
-              <div className="aspect-square overflow-hidden bg-neutral-200">
-                <img
-                  src={member.imageUrl}
-                  alt={member.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-1">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent dark:from-amber-900/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10 flex flex-col items-center justify-center min-h-[120px]">
+                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 dark:from-amber-500 dark:to-amber-700 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-white font-bold text-lg">
+                    {member.name.split(' ').map(n => n[0]).join('')}
+                  </span>
+                </div>
+                
+                <h3 className="text-lg font-bold text-neutral-900 dark:text-white text-center group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                   {member.name}
                 </h3>
-                <p className="text-sm font-medium text-amber-600 dark:text-amber-400 mb-3">
-                  {member.role}
-                </p>
-                <p className="text-sm text-neutral-600 dark:text-neutral-300 mb-4 leading-relaxed">
-                  {member.bio}
-                </p>
-
-                <div className="flex items-center space-x-3">
-                  {member.linkedin && (
-                    <a
-                      href={member.linkedin}
-                      className="p-2 bg-white dark:bg-neutral-700 dark:text-white rounded-full border border-neutral-200 dark:border-neutral-600 hover:border-neutral-900 dark:hover:border-amber-600 hover:bg-neutral-900 dark:hover:bg-amber-600 hover:text-white transition-colors"
-                      aria-label={`${member.name} LinkedIn`}
-                    >
-                      <Linkedin size={16} />
-                    </a>
-                  )}
-                  {member.email && (
-                    <a
-                      href={`mailto:${member.email}`}
-                      className="p-2 bg-white dark:bg-neutral-700 dark:text-white rounded-full border border-neutral-200 dark:border-neutral-600 hover:border-neutral-900 dark:hover:border-amber-600 hover:bg-neutral-900 dark:hover:bg-amber-600 hover:text-white transition-colors"
-                      aria-label={`Email ${member.name}`}
-                    >
-                      <Mail size={16} />
-                    </a>
-                  )}
-                </div>
+                
+                <div className="mt-2 w-8 h-0.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
           ))}

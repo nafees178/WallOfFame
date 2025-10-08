@@ -27,7 +27,7 @@ export default function Event() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-1">Date</h3>
-                <p className="text-neutral-300">October 11-12, 2025</p>
+                <p className="text-neutral-300">October 10-11, 2025</p>
                 <p className="text-sm text-neutral-400 mt-1">Two days of art, inspiration, and connection</p>
               </div>
             </div>
