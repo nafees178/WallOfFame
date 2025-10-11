@@ -41,16 +41,12 @@ export default function Products() {
                 setSelectedProduct(product);
               }}
             >
-              <div className={`relative overflow-hidden bg-neutral-200 ${
-                product.theme === 'Split' ? 'aspect-[16/9]' : 'aspect-[3/4]'
-              }`}>
+              <div className="relative overflow-hidden bg-neutral-200 aspect-[3/4]">
                 {product.thumbnail ? (
                   <img
                     src={product.thumbnail}
                     alt={product.title}
-                    className={`w-full h-full group-hover:scale-105 transition-transform duration-500 ${
-                      product.theme === 'Split' ? 'rotate-[270deg] object-contain' : 'object-cover'
-                    }`}
+                    className="w-full h-full group-hover:scale-105 transition-transform duration-500 object-cover"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-neutral-300 dark:bg-neutral-600">
@@ -100,16 +96,12 @@ export default function Products() {
           <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
             <div className="grid md:grid-cols-2 gap-8 p-8">
               <div className="space-y-4">
-                <div className={`rounded-xl overflow-hidden bg-neutral-100 ${
-                  selectedProduct.theme === 'Split' ? 'aspect-[16/9]' : 'aspect-[3/4]'
-                }`}>
+                <div className="rounded-xl overflow-hidden bg-neutral-100 aspect-[3/4]">
                   {selectedProduct.fullImage ? (
                     <img
                       src={selectedProduct.fullImage}
                       alt={selectedProduct.title}
-                      className={`w-full h-full ${
-                        selectedProduct.theme === 'Split' ? 'rotate-[270deg] object-contain' : 'object-cover'
-                      }`}
+                      className="w-full h-full object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-neutral-200">
